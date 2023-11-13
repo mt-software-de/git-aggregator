@@ -5,6 +5,7 @@
 import logging
 import os
 from string import Template
+from pathlib import Path
 
 import yaml
 
@@ -13,6 +14,25 @@ from ._compat import string_types
 
 
 log = logging.getLogger(__name__)
+
+def update_patches(repo_dict, repo_data):
+    """Check and update repo_dict with patch files"""
+    patches = repo_data.get("patches")
+    if not patches:
+        repo_dict["patches"] = []
+        return
+    _patches = []
+    for patch in patches:
+        path = Path(patch)
+        if not path.exists():
+            raise ConfigException("%s: The patch file or directory does not exists" % path)
+        if path.is_file():
+            _patches.append(path)
+        elif path.is_dir():
+            for _path in path.iterdir():
+                if _path.is_file():
+                    _patches.append(_path)
+    repo_dict["patches"] = _patches
 
 
 def get_repos(config, force=False):
@@ -128,6 +148,7 @@ def get_repos(config, force=False):
                     cmds = [cmds]
                 commands = cmds
         repo_dict['shell_command_after'] = commands
+        update_patches(repo_dict, repo_data)
         repo_list.append(repo_dict)
     return repo_list
 

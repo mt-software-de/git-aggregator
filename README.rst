@@ -343,11 +343,13 @@ Contributors
 * Simone Orsi (camptocamp_)
 * Artem Kostyuk
 * Jan Verbeek
+* Michael Tietz (mtsoftware_)
 
 .. _ACSONE: https://www.acsone.eu
 .. _Tecnativa: https://www.tecnativa.com
 .. _camptocamp: https://www.camptocamp.com
 .. _LasLabs: https://laslabs.com
+.. _mtsoftware: https://github.com/mt-software-de
 
 Maintainer
 ----------
